@@ -1,11 +1,11 @@
+import chalk from "chalk";
+import figlet from "figlet";
 import ora from "ora";
 import { OLXScraper } from "./scrapers/OLXScraper";
 import { displayResults } from "./utils/display";
 import { handleError } from "./utils/errorHandler";
 import { getUserInput } from "./utils/input";
 import logger from "./utils/logger";
-import figlet from "figlet";
-import chalk from "chalk";
 
 export async function main(): Promise<void> {
 	const banner = figlet.textSync("OLX - SCRAPPER", {

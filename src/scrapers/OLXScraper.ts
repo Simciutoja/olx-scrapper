@@ -81,18 +81,18 @@ export class OLXScraper {
 		if (dateStr.includes("Odświeżono")) {
 			const dateMatch = dateStr.match(/(\d{1,2}) (\w+) (\d{4})/);
 			if (dateMatch) {
-				const day = parseInt(dateMatch[1]);
+				const day = parseInt(dateMatch[1], 10);
 				const month = this.parsePolishMonth(dateMatch[2]);
-				const year = parseInt(dateMatch[3]);
+				const year = parseInt(dateMatch[3], 10);
 				return new Date(year, month, day);
 			}
 		}
 
 		const dateMatch = dateStr.match(/(\d{2}) (\w+) (\d{4})/);
 		if (dateMatch) {
-			const day = parseInt(dateMatch[1]);
+			const day = parseInt(dateMatch[1], 10);
 			const month = this.parsePolishMonth(dateMatch[2]);
-			const year = parseInt(dateMatch[3]);
+			const year = parseInt(dateMatch[3], 10);
 			return new Date(year, month, day);
 		}
 
