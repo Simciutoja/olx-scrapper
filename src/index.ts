@@ -37,7 +37,7 @@ export async function main(): Promise<void> {
 		}
 
 		spinner.succeed(
-			`Zakończono skanowanie. Znaleziono ${offers.length} ofert.`,
+			`✅ Zakończono skanowanie. Znaleziono ${offers.length} ofert.`,
 		);
 		displayResults(offers);
 		if (saveToFile) {
