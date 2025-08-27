@@ -67,6 +67,7 @@ The scraper can be configured through the `constants.ts` file:
 - [ ] Implement CAPTCHA solving
 - [ ] Add a nextjs frontend for better UX
 - [ ] Implement hono.js backend for API access
+- [ ] Add notifications about new listings (discord, email, SMS)
 
 ## Project Structure
 
