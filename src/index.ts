@@ -8,14 +8,14 @@ import figlet from "figlet";
 import chalk from "chalk";
 
 export async function main(): Promise<void> {
-    const banner = figlet.textSync('OLX - SCRAPPER', {
-        font: 'Standard',
-        horizontalLayout: 'default',
-        verticalLayout: 'default'
-    });
+	const banner = figlet.textSync("OLX - SCRAPPER", {
+		font: "Standard",
+		horizontalLayout: "default",
+		verticalLayout: "default",
+	});
 
-    console.log(chalk.red.bold(banner));
-    console.log("\n");
+	console.log(chalk.red.bold(banner));
+	console.log("\n");
 
 	try {
 		const { url, saveToFile } = await getUserInput();
@@ -57,5 +57,4 @@ export async function main(): Promise<void> {
 	}
 }
 
-main().then(r =>
-logger.debug("Process finished", r))
+main().then((r) => logger.debug("Process finished", r));
