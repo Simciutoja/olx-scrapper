@@ -1,12 +1,22 @@
-import logSymbols from "log-symbols";
 import ora from "ora";
 import { OLXScraper } from "./scrapers/OLXScraper";
 import { displayResults } from "./utils/display";
 import { handleError } from "./utils/errorHandler";
 import { getUserInput } from "./utils/input";
 import logger from "./utils/logger";
+import figlet from "figlet";
+import chalk from "chalk";
 
 export async function main(): Promise<void> {
+    const banner = figlet.textSync('OLX - SCRAPPER', {
+        font: 'Standard',
+        horizontalLayout: 'default',
+        verticalLayout: 'default'
+    });
+
+    console.log(chalk.red.bold(banner));
+    console.log("\n");
+
 	try {
 		const { url, saveToFile } = await getUserInput();
 		const spinner = ora("🔍 Rozpoczynanie skanowania...").start();
@@ -22,7 +32,7 @@ export async function main(): Promise<void> {
 		const offers = await scraper.scrape(url);
 
 		if (offers.length === 0) {
-			spinner.fail(`${logSymbols.error} Nie znaleziono żadnych ofert.`);
+			spinner.fail(`Nie znaleziono żadnych ofert.`);
 			return;
 		}
 
@@ -47,6 +57,5 @@ export async function main(): Promise<void> {
 	}
 }
 
-if (require.main === module) {
-	main().catch(handleError);
-}
+main().then(r =>
+logger.debug("Process finished", r))
