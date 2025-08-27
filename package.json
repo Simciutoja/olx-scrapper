@@ -12,7 +12,7 @@
 		"build": "tsc",
 		"prepare": "husky",
 		"start": "tsx src/index.ts",
-        "start:prod": "node dist/index.js"
+		"start:prod": "node dist/index.js"
 	},
 	"dependencies": {
 		"@biomejs/biome": "^2.2.2",
