@@ -9,27 +9,21 @@ export const URLInputSchema = z.object({
 	saveToFile: z.boolean().optional(),
 });
 
-export interface RawOffer {
-	title: string;
-	price: string;
-	location: string;
-	url: string;
-	id?: string;
-	date: Date | null;
-}
-
-export const OfferSchema = z.object({
+export const RawOfferSchema = z.object({
 	title: z.string().min(1, "Tytuł jest wymagany"),
 	price: z.string().min(1, "Cena jest wymagana"),
 	location: z.string().min(1, "Lokalizacja jest wymagana"),
 	url: z.string().url("Nieprawidłowy format URL"),
+	id: z.string().optional(),
+	date: z.union([z.date(), z.null(), z.string()]).optional(),
+});
+
+export const OfferSchema = RawOfferSchema.extend({
 	id: z.string().min(1, "Id oferty jest wymagane"),
 	date: z
-		.date({
-			required_error: "Data jest wymagana",
-			invalid_type_error: "Nieprawidłowy format daty",
-		})
-		.default(() => new Date()),
+		.date()
+		.default(() => new Date())
+		.describe("Data dodania oferty"),
 });
 
 export const ScrapingConfigSchema = z.object({
@@ -41,6 +35,19 @@ export const ScrapingConfigSchema = z.object({
 	headless: z.boolean().default(false),
 });
 
+export const NotifyOptionsSchema = z.object({
+	discordWebhookUrl: z.string().url().nullable().optional(),
+});
+
+export const NotifyPayloadSchema = z.object({
+	title: z.string().min(1),
+	url: z.string().url(),
+});
+
 export type Offer = z.infer<typeof OfferSchema>;
+export type RawOffer = z.infer<typeof RawOfferSchema>;
 export type URLInput = z.infer<typeof URLInputSchema>;
 export type ScrapingConfig = z.infer<typeof ScrapingConfigSchema>;
+
+export type NotifyOptions = z.infer<typeof NotifyOptionsSchema>;
+export type NotifyPayload = z.infer<typeof NotifyPayloadSchema>;

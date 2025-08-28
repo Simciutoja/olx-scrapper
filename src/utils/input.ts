@@ -70,7 +70,9 @@ function addSortingToUrl(url: string, sorting: string): string {
 		urlObj.searchParams.set("search[order]", sorting);
 		return urlObj.toString();
 	} catch (error) {
-		logger.warn("Nie udało się przetworzyć URL:", error);
+		logger.warn("Nie udało się przetworzyć URL", {
+			message: (error as Error)?.message,
+		});
 		return url;
 	}
 }

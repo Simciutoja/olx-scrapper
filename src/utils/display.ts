@@ -1,5 +1,7 @@
 import Table from "cli-table3";
 import type { Offer } from "../types/schemas";
+import { OfferSchema } from "../types/schemas";
+import logger from "./logger";
 
 function formatDate(date: Date): string {
 	return date.toLocaleDateString("pl-PL", {
@@ -22,7 +24,18 @@ export function displayResults(offers: Offer[]): void {
 		},
 	});
 
-	const sortedOffers = offers.sort((a, b) => {
+	const validated = offers
+		.map((o) => OfferSchema.safeParse(o))
+		.filter((r) => r.success)
+		.map((r) => r as { success: true; data: Offer })
+		.map((r) => r.data);
+
+	if (validated.length === 0) {
+		logger.warn("No valid offers to display");
+		return;
+	}
+
+	const sortedOffers = validated.sort((a, b) => {
 		return new Date(b.date).getTime() - new Date(a.date).getTime();
 	});
 

@@ -60,14 +60,10 @@ The scraper can be configured through the `constants.ts` file:
 
 - [ ] Add support for more websites
 - [ ] Implement advanced filtering options
-- [ ] Improve error handling and logging
-- [ ] Add unit and integration tests
-- [ ] Add scheduling for periodic scraping
 - [ ] Support for proxy rotation
 - [ ] Implement CAPTCHA solving
 - [ ] Add a nextjs frontend for better UX
 - [ ] Implement hono.js backend for API access
-- [ ] Add notifications about new listings (discord, email, SMS)
 
 ## Project Structure
 

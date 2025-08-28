@@ -12,6 +12,7 @@
 		"build": "tsc",
 		"prepare": "husky",
 		"start": "tsx src/index.ts",
+		"test": "vitest",
 		"start:prod": "node dist/index.js"
 	},
 	"dependencies": {
@@ -30,12 +31,14 @@
 		"ora": "^8.2.0",
 		"prompts": "^2.4.2",
 		"puppeteer": "^24.17.0",
-		"tsx": "^4.20.5"
+		"tsx": "^4.20.5",
+		"zod": "^4.1.4"
 	},
 	"devDependencies": {
 		"@types/figlet": "^1.7.0",
 		"@types/prompts": "^2.4.9",
-		"typescript": "^5.5.3"
+		"typescript": "^5.5.3",
+		"vitest": "^0.34.3"
 	},
 	"private": true
 }

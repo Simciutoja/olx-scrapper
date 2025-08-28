@@ -1,16 +1,24 @@
-import notifier from "node-notifier";
 import axios from "axios";
+import notifier from "node-notifier";
+import { NotifyOptionsSchema, NotifyPayloadSchema } from "../types/schemas";
 import logger from "./logger";
-
-export type NotifyOptions = {
-	discordWebhookUrl?: string | null;
-};
 
 export async function notifyNewOffers(
 	offers: { title: string; url: string }[],
-	options: NotifyOptions = {},
+	options: unknown = {},
 ): Promise<void> {
-	if (offers.length === 0) return;
+	if (!Array.isArray(offers) || offers.length === 0) return;
+
+	const parsedOptions = (() => {
+		try {
+			return NotifyOptionsSchema.parse(options);
+		} catch (e) {
+			logger.warn("Invalid notify options provided, falling back to defaults", {
+				message: (e as Error)?.message,
+			});
+			return {};
+		}
+	})();
 
 	const summary = `${offers.length} new OLX offer(s)`;
 	const message = offers
@@ -18,24 +26,29 @@ export async function notifyNewOffers(
 		.map((o) => `${o.title} - ${o.url}`)
 		.join("\n");
 
-
 	try {
+		const first = NotifyPayloadSchema.parse(offers[0]);
 		notifier.notify({
 			title: summary,
-			message: offers[0].title,
-			open: offers[0].url,
+			message: first.title,
+			open: first.url,
 		});
 	} catch (error) {
-		logger.warn("System notification failed:", error);
+		logger.warn("System notification failed or payload invalid", {
+			message: (error as Error)?.message,
+		});
 	}
 
-	if (options.discordWebhookUrl) {
+	if (parsedOptions.discordWebhookUrl) {
 		try {
-			await axios.post(options.discordWebhookUrl, {
+			await axios.post(parsedOptions.discordWebhookUrl, {
 				content: `**${summary}**\n${message}`,
 			});
 		} catch (error) {
-			logger.warn("Failed to send Discord webhook:", error);
+			logger.warn("Failed to send Discord webhook", {
+				message: (error as Error)?.message,
+				stack: (error as Error)?.stack,
+			});
 		}
 	}
 }
