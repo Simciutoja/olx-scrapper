@@ -13,3 +13,5 @@ export const SELECTORS = {
 	LOCATION: '[data-testid="location-date"]',
 	LINK: "a.css-1tqlkj0",
 } as const;
+
+export const cron_time = "*/10 * * * * *";

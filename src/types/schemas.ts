@@ -14,6 +14,7 @@ export interface RawOffer {
 	price: string;
 	location: string;
 	url: string;
+	id?: string;
 	date: Date | null;
 }
 
@@ -22,6 +23,7 @@ export const OfferSchema = z.object({
 	price: z.string().min(1, "Cena jest wymagana"),
 	location: z.string().min(1, "Lokalizacja jest wymagana"),
 	url: z.string().url("Nieprawidłowy format URL"),
+	id: z.string().min(1, "Id oferty jest wymagane"),
 	date: z
 		.date({
 			required_error: "Data jest wymagana",
