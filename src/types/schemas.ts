@@ -22,10 +22,12 @@ export const OfferSchema = z.object({
 	price: z.string().min(1, "Cena jest wymagana"),
 	location: z.string().min(1, "Lokalizacja jest wymagana"),
 	url: z.string().url("Nieprawidłowy format URL"),
-	date: z.date({
-		required_error: "Data jest wymagana",
-		invalid_type_error: "Nieprawidłowy format daty",
-	}).default(() => new Date()),
+	date: z
+		.date({
+			required_error: "Data jest wymagana",
+			invalid_type_error: "Nieprawidłowy format daty",
+		})
+		.default(() => new Date()),
 });
 
 export const ScrapingConfigSchema = z.object({
