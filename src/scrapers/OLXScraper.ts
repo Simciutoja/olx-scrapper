@@ -1,10 +1,9 @@
-import crypto from "node:crypto";
 import type { Browser, Page } from "puppeteer";
 import puppeteer from "puppeteer";
 import { DEFAULT_CONFIG, SELECTORS } from "../config/constants";
 import { ScrapingError } from "../errors/ScrapingError";
 import type { Offer, RawOffer, ScrapingConfig } from "../types/schemas";
-import { OfferSchema, ScrapingConfigSchema } from "../types/schemas";
+import { ScrapingConfigSchema } from "../types/schemas";
 import logger from "../utils/logger";
 import {
 	extractIdFromUrl as utilExtractIdFromUrl,

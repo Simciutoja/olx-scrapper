@@ -1,6 +1,6 @@
 import * as fs from "node:fs/promises";
 import { describe, expect, it, vi } from "vitest";
-import { saveOffersToFile } from "../src/index";
+import { saveOffersToFile } from "../src";
 import { hashOffer } from "../src/scrapers/olxUtils";
 
 vi.mock("node:fs/promises", () => {

@@ -156,8 +156,7 @@ export function detectNewOffers(
 	const recent = refDate
 		? offers.filter((o) => o.date.getTime() >= refDate.getTime())
 		: offers.slice();
-	const newOffers = recent.filter((o) => !seenIds.has(o.id));
-	return newOffers;
+	return recent.filter((o) => !seenIds.has(o.id));
 }
 
 export { saveOffersToFile };
