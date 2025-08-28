@@ -22,10 +22,17 @@ export async function main(): Promise<void> {
 		const spinner = ora("🔍 Rozpoczynanie skanowania...").start();
 		spinner.text = "🌐 Inicjalizacja przeglądarki...";
 
-		const scraper = new OLXScraper({
-			headless: true,
-			timeout: 30000,
-		});
+		let scraper: OLXScraper;
+
+		try {
+			scraper = new OLXScraper({
+				headless: true,
+				timeout: 30000,
+			});
+		} catch (_error) {
+			spinner.fail("Nie udało się zainicjalizować przeglądarki.");
+			return;
+		}
 
 		spinner.text = "🌐 Pobieranie ofert";
 
@@ -57,4 +64,9 @@ export async function main(): Promise<void> {
 	}
 }
 
-main().then((r) => logger.debug("Process finished", r));
+try {
+	main().then((r) => r);
+} catch (error) {
+	handleError(error);
+	process.exit(1);
+}
