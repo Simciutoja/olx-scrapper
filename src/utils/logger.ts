@@ -1,3 +1,5 @@
+import chalk from "chalk";
+
 type LogLevel = "info" | "warn" | "error" | "debug";
 
 const LEVEL_PRIORITY: Record<LogLevel, number> = {
@@ -19,7 +21,26 @@ function safeStringify(value: unknown): string {
 	}
 }
 
-class Logger {
+const LOG_STYLES = {
+	error: {
+		icon: "❌",
+		color: chalk.red,
+	},
+	warn: {
+		icon: "⚠️",
+		color: chalk.yellow,
+	},
+	info: {
+		icon: "ℹ️",
+		color: chalk.blue,
+	},
+	debug: {
+		icon: "🔍",
+		color: chalk.gray,
+	},
+};
+
+export class Logger {
 	private level: LogLevel;
 
 	constructor() {
@@ -67,14 +88,17 @@ class Logger {
 			process.env.LOG_FORMAT === "json" ||
 			process.env.NODE_ENV === "production";
 		if (useJson) {
-			const out = safeStringify(base);
+			const out = safeStringify(base) + "\n";
 			if (level === "error" || level === "warn") console.error(out);
 			else console.log(out);
 			return;
 		}
 		const lvl = level.toUpperCase();
 		const metaStr = meta ? ` ${safeStringify(meta)}` : "";
-		const formatted = `[${timestamp}] [${lvl}] ${base.message}${metaStr}`;
+		const style = LOG_STYLES[level as keyof typeof LOG_STYLES];
+		const icon = style.icon;
+		const colorize = style.color;
+		const formatted = `${icon} [${timestamp}] [${colorize(lvl)}] ${colorize(base.message)}${metaStr}\n`;
 		if (level === "error") console.error(formatted);
 		else if (level === "warn") console.warn(formatted);
 		else console.log(formatted);
