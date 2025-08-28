@@ -41,7 +41,7 @@ export async function getUserInput(): Promise<URLInput> {
 				return true;
 			} catch (error) {
 				if (error instanceof z.ZodError) {
-					return error.errors[0]?.message || "Nieprawidłowy URL";
+					return error.issues[0]?.message || "Nieprawidłowy URL";
 				}
 				return "Wystąpił błąd podczas walidacji";
 			}
